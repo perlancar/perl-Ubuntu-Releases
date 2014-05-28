@@ -99,6 +99,10 @@ die "BUG: Can't generate func: $res->[0] - $res->[1]" unless $res->[0] == 200;
 
 =head1 SYNOPSIS
 
+ use Ubuntu::Releases;
+ my $res = list_ubuntu_releases(detail=>1);
+ # raw data is in $Ubuntu::Releases::data;
+
 
 =head1 DESCRIPTION
 
