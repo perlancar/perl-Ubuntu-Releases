@@ -1,0 +1,32 @@
+#!/usr/bin/perl
+
+use 5.010;
+use strict;
+use warnings;
+
+use Perinci::CmdLine;
+
+# VERSION
+# DATE
+
+Perinci::CmdLine->new(url=>'/Ubuntu/Releases/list_ubuntu_releases')->run;
+
+1;
+# ABSTRACT: List Ubuntu releases
+# PODNAME: list-ubuntu-releases
+
+=head1 SYNOPSIS
+
+ # List all Ubuntu releases
+ % list-ubuntu-releases --detail
+
+ # Show available options
+ $ list-ubuntu-releases --help
+
+
+=head1 DESCRIPTION
+
+This is a command-line interface for the <list_ubuntu_releases> function in
+L<Ubuntu::Releases>.
+
+=cut
