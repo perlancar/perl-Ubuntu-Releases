@@ -1,5 +1,12 @@
 Revision history for Ubuntu-Releases
 
+0.05    2015-09-22 (PERLANCAR)
+
+	- Split CLI to its own dist to keep our deps small.
+
+	- Update data.
+
+
 0.04    2015-09-06 (PERLANCAR)
 
 	- No functional changes.
