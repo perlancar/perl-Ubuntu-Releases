@@ -1,5 +1,10 @@
 Revision history for Ubuntu-Releases
 
+0.07    2015-10-01 (PERLANCAR)
+
+	- Update data (perl version for older releases).
+
+
 0.06    2015-09-22 (PERLANCAR)
 
 	- Update data (add column perlver).
