@@ -1,5 +1,10 @@
 Revision history for Ubuntu-Releases
 
+0.09    2016-05-27 (PERLANCAR)
+
+        - Update data: perl version for xenial.
+
+
 0.08    2015-11-14 (PERLANCAR)
 
 	- Update data (xenial, minus perl version [assumed to be still at
