@@ -1,5 +1,8 @@
 package Ubuntu::Releases;
 
+# DATE
+# VERSION
+
 use 5.010001;
 use strict;
 use warnings;
@@ -13,9 +16,6 @@ our @EXPORT_OK = qw(
                );
 
 our %SPEC;
-
-# VERSION
-# DATE
 
 our $meta = {
     summary => 'Ubuntu releases',
