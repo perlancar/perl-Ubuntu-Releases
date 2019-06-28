@@ -1,3 +1,9 @@
+0.111   2019-06-28  Released-By: PERLANCAR
+
+        - Update data (new releases: 17.10/artful, 18.04 LTS/bionic,
+          18.10/cosmic, 19.04/disco).
+
+
 0.110   2017-09-08  Released-By: PERLANCAR
 
 	- [Incompatible change] Switch data source from gudangdata
