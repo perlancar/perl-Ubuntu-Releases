@@ -1,6 +1,8 @@
 package Ubuntu::Releases;
 
+# AUTHORITY
 # DATE
+# DIST
 # VERSION
 
 use 5.010001;
@@ -45,7 +47,40 @@ our $meta = {
 our $data = do {
     no warnings 'void';
     [];
-# CODE: { require JSON; require File::Slurper; my $json = JSON->new; my $rels = $json->decode(File::Slurper::read_binary("../gudangdata-distrowatch/table/ubuntu_release/data.json")); my $data = []; for my $r (@$rels) { next if $r->{release_name} eq 'snapshot'; my ($ver, $code) = $r->{release_name} =~ /\A(\d\S*?(?: LTS)?)([a-z].+)\z/ or die "Can't extract code+ver from release_name '$r->{release_name}'"; push @$data, {version=>$ver, code_name=>$code, reldate=>$r->{release_date}, eoldate=>($r->{eol_date} =~ /\xa0/ ? undef : $r->{eol_date}), linux_version=>$r->{linux_version}, mysql_version=>$r->{mysql_version}, mariadb_version=>$r->{mariadb_version}, postgresql_version=>$r->{postgresql_version}, apache_httpd_version=>$r->{httpd_version}, nginx_version=>$r->{nginx_version}, perl_version=>$r->{perl_version}, python_version=>$r->{python_version}, php_version=>$r->{php_version}, ruby_version=>$r->{ruby_version}, bash_version=>$r->{bash_version} } } $data; }
+# BEGIN_CODE
+    {
+        use strict;
+        use warnings;
+        require JSON;
+        require File::Slurper;
+
+        my $json = JSON->new;
+        my $rels = $json->decode(
+            File::Slurper::read_binary("../gudangdata-distrowatch/table/ubuntu_release/data.json"));
+        my $data = [];
+        for my $rel (@$rels) {
+            next if $rel->{release_name} =~ /^snapshot/;
+            my ($ver, $code) = $rel->{release_name} =~ /\A(\d\S*?(?: LTS)?)([a-z].+)\z/
+                or die "Can't extract code+ver from release_name '$rel->{release_name}'";
+            push @$data, {
+                version=>$ver, code_name=>$code,
+                reldate=>$rel->{release_date}, eoldate=>($rel->{eol_date} =~ /\xa0/ ? undef : $rel->{eol_date}),
+                linux_version=>$rel->{linux_version},
+                mysql_version=>$rel->{mysql_version},
+                mariadb_version=>$rel->{mariadb_version},
+                postgresql_version=>$rel->{postgresql_version},
+                apache_httpd_version=>$rel->{httpd_version},
+                nginx_version=>$rel->{nginx_version},
+                perl_version=>$rel->{perl_version},
+                python_version=>$rel->{python_version},
+                php_version=>$rel->{php_version},
+                ruby_version=>$rel->{ruby_version},
+                bash_version=>$rel->{bash_version},
+            };
+        }
+        $data;
+    }
+# END_CODE
 };
 
 my $res = gen_read_table_func(
