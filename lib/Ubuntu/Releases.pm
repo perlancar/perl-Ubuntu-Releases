@@ -48,11 +48,24 @@ our $data = do {
     no warnings 'void';
     [];
 # BEGIN_CODE
+
+    # this code will be run by Dist::Zilla::Plugin::InsertCodeResult during
+    # build and the result will be inserted to the source code, while the
+    # original code will no longer be in the final built version.
+
     {
         use strict;
         use warnings;
-        require JSON;
+
         require File::Slurper;
+        require JSON;
+        require Text::CSV_XS;
+
+        # mapping of release name -> animal
+        my %animal_for;
+        for (@{ Text::CSV_XS::csv(in => "../gudangdata/table/ubuntu_release_animal/data.csv") }) {
+            $animal_for{ $_->[0] } = $_->[1];
+        }
 
         my $json = JSON->new;
         my $rels = $json->decode(
@@ -62,8 +75,10 @@ our $data = do {
             next if $rel->{release_name} =~ /^snapshot/;
             my ($ver, $code) = $rel->{release_name} =~ /\A(\d\S*?(?: LTS)?)([a-z].+)\z/
                 or die "Can't extract code+ver from release_name '$rel->{release_name}'";
+            my $animal = $animal_for{$code}
+                or warn "Can't find out the animal for release codenamed $code";
             push @$data, {
-                version=>$ver, code_name=>$code,
+                version=>$ver, code_name=>$code, animal=>$animal,
                 reldate=>$rel->{release_date}, eoldate=>($rel->{eol_date} =~ /\xa0/ ? undef : $rel->{eol_date}),
                 linux_version=>$rel->{linux_version},
                 mysql_version=>$rel->{mysql_version},
