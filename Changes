@@ -1,3 +1,10 @@
+0.112   2020-02-21  Released-By: PERLANCAR; Urgency: medium
+
+        - Update data (new relase: 19.10/eoan).
+
+	- Add field 'animal'.
+
+
 0.111   2019-06-28  Released-By: PERLANCAR; Urgency: medium
 
         - Update data (new releases: 17.10/artful, 18.04 LTS/bionic,
@@ -71,4 +78,3 @@
 0.01    2014-05-28  Released-By: SHARYANTO
 
         - First version.
-

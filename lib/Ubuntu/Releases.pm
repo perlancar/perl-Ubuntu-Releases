@@ -24,22 +24,23 @@ our $meta = {
     fields => {
         version         => { pos => 0, schema => "str*", sortable => 1, summary => "Version", unique => 1 },
         code_name       => { pos => 1, schema => "str*", sortable => 1, summary => "Code name", unique => 1 },
-        reldate         => { pos => 2, schema => "date*", sortable => 1, summary => "Release date" },
-        eoldate         => { pos => 3, schema => "date*", sortable => 1, summary => "Supported until" },
+        animal          => { pos => 2, schema => "str*", sortable => 1, summary => "Code name", unique => 1 },
+        reldate         => { pos => 3, schema => "date*", sortable => 1, summary => "Release date" },
+        eoldate         => { pos => 4, schema => "date*", sortable => 1, summary => "Supported until" },
 
-        linux_version   => {pos=> 4, schema=>'str*'},
+        linux_version   => {pos=> 5, schema=>'str*'},
 
-        mysql_version        => {pos=> 5, schema=>'str*'},
-        mariadb_version      => {pos=> 6, schema=>'str*'},
-        postgresql_version   => {pos=> 7, schema=>'str*'},
-        apache_httpd_version => {pos=> 8, schema=>'str*'},
-        nginx_version        => {pos=> 9, schema=>'str*'},
+        mysql_version        => {pos=> 6, schema=>'str*'},
+        mariadb_version      => {pos=> 7, schema=>'str*'},
+        postgresql_version   => {pos=> 8, schema=>'str*'},
+        apache_httpd_version => {pos=> 9, schema=>'str*'},
+        nginx_version        => {pos=>10, schema=>'str*'},
 
-        perl_version         => {pos=>10, schema=>'str*'},
-        python_version       => {pos=>11, schema=>'str*'},
-        php_version          => {pos=>12, schema=>'str*'},
-        ruby_version         => {pos=>13, schema=>'str*'},
-        bash_version         => {pos=>14, schema=>'str*'},
+        perl_version         => {pos=>11, schema=>'str*'},
+        python_version       => {pos=>12, schema=>'str*'},
+        php_version          => {pos=>13, schema=>'str*'},
+        ruby_version         => {pos=>14, schema=>'str*'},
+        bash_version         => {pos=>15, schema=>'str*'},
     },
     pk => "version",
 };
@@ -58,7 +59,7 @@ our $data = do {
         use warnings;
 
         require File::Slurper;
-        require JSON;
+        require JSON::MaybeXS;
         require Text::CSV_XS;
 
         # mapping of release name -> animal
@@ -67,7 +68,7 @@ our $data = do {
             $animal_for{ $_->[0] } = $_->[1];
         }
 
-        my $json = JSON->new;
+        my $json = JSON::MaybeXS->new;
         my $rels = $json->decode(
             File::Slurper::read_binary("../gudangdata-distrowatch/table/ubuntu_release/data.json"));
         my $data = [];
