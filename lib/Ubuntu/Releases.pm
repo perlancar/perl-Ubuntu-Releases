@@ -1,18 +1,17 @@
 package Ubuntu::Releases;
 
+use 5.010001;
+use strict;
+use warnings;
+
+use Exporter 'import';
+use Perinci::Sub::Gen::AccessTable qw(gen_read_table_func);
+
 # AUTHORITY
 # DATE
 # DIST
 # VERSION
 
-use 5.010001;
-use strict;
-use warnings;
-
-use Perinci::Sub::Gen::AccessTable qw(gen_read_table_func);
-
-use Exporter;
-our @ISA = qw(Exporter);
 our @EXPORT_OK = qw(
                        list_ubuntu_releases
                );
@@ -47,16 +46,18 @@ our $meta = {
 
 our $data = do {
     no warnings 'void';
-    [];
+
 # BEGIN_CODE
 
     # this code will be run by Dist::Zilla::Plugin::InsertCodeResult during
     # build and the result will be inserted to the source code, while the
     # original code will no longer be in the final built version.
 
+    my $data;
     {
         use strict;
         use warnings;
+        use Log::ger::Screen;
 
         require File::Slurper;
         require JSON::MaybeXS;
@@ -71,8 +72,8 @@ our $data = do {
         my $json = JSON::MaybeXS->new;
         my $rels = $json->decode(
             File::Slurper::read_binary("../gudangdata-distrowatch/table/ubuntu_release/data.json"));
-        my $data = [];
         for my $rel (@$rels) {
+            log_trace "Processing release %s ...", $rel;
             next if $rel->{release_name} =~ /^snapshot/;
             my ($ver, $code) = $rel->{release_name} =~ /\A(\d\S*?(?: LTS)?)([a-z].+)\z/
                 or die "Can't extract code+ver from release_name '$rel->{release_name}'";
@@ -94,8 +95,8 @@ our $data = do {
                 bash_version=>$rel->{bash_version},
             };
         }
-        $data;
     }
+    $data;
 # END_CODE
 };
 
